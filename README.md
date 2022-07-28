@@ -1,5 +1,7 @@
 # how to use simple git command tool
 
+`./macos/g` file is executable file
+
 ```bash
 # usage
 g [options] [param]
