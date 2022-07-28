@@ -1,11 +1,17 @@
-# how to use
+# how to use simple git command tool
 
 ```bash
-usage: g [options] [param]
-example: g -c index.ts" - running command: git checkout index.ts
+# usage
+g [options] [param]
+
+# example
+g -c index.ts
+
+# running command
+git checkout index.ts
 ```
 
-## how to multiple arguments
+## how to use multiple arguments
 
 ```bash
 # usage
