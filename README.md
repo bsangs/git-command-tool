@@ -8,13 +8,13 @@ example: g -c index.ts" - running command: git checkout index.ts
 ## how to multiple arguments
 
 ```bash
-#usage
+# usage
 g [options] [params...]
 
-#example
+# example
 g -amu index.ts "feat: Update index.ts"
 
-#running command
+# running command
 git add index.ts && git commit -m "feat: Update index.ts" && git push
 ```
 
