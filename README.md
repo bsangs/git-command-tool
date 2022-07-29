@@ -34,6 +34,12 @@ g -h # show git command help
 
 # options
 
+## initalize category arguments
+
+```bash
+g -i <remote url> # init new repository
+```
+
 ## pull category arguments
 
 ```bash

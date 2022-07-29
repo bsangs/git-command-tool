@@ -11,12 +11,21 @@ def pull_command():
   return 'git pull -q'
 
 def checkout_command(param):
+  if not param:
+    return
+
   return 'git checkout %s' % param
 
 def add_command(param):
+  if not param:
+    return
+
   return 'git add %s' % param
 
 def commit_command(param):
+  if not param:
+    return
+
   return 'git commit -m "%s"' % param
 
 def push_command():
@@ -31,6 +40,22 @@ def status_command(param=None):
   if param:
     return 'git status %s' % param
   return 'git status'
+
+def init_command(param=None):
+  if not param:
+    return
+
+  commands = ["touch README.md"]
+
+  commands.append('git init')
+  commands.append(add_command('README.md'))
+  commands.append(commit_command('first commit'))
+  commands.append('git branch -M main')
+  commands.append('git remote add origin %s' % param)
+  commands.append('git push -u origin main')
+
+  return mix_command(commands)
+
 
 def mix_command(commands):
   return ' && '.join(commands)
@@ -65,6 +90,9 @@ def show_help_message():
   [help command]
     -h \t\t\t show git command help
 
+  [initalize category arguments]
+    -i <remote url> \t init new repository
+
   [pull category arguments]
     -f \t\t\t git fetch
     -c <branch | path> \t git checkout <branch | path>
@@ -83,6 +111,7 @@ def show_help_message():
 
 def process_options(options, option_params):
   commands = list()
+  filtered_command = list()
   use_options = list()
 
   # pop으로 params 불러오기 때문에 reverse
@@ -103,6 +132,8 @@ def process_options(options, option_params):
         commands.append(diff_command(params.pop()))
     if option == 's':
       commands.append(status_command(params.pop()))
+    if option == 'i':
+      commands.append(init_command(params.pop()))
 
   for option in options:
     # 이미 사용된 옵션이면 넘어가기
@@ -130,9 +161,13 @@ def process_options(options, option_params):
 
     use_options.append(option)
 
-  result_commands = mix_command(commands)
+  for command in commands:
+    if command:
+      filtered_command.append(command)
   
-  if len(result_commands) > 0:
+  result_commands = mix_command(filtered_command)
+  
+  if len(result_commands) > 0 and len(filtered_command) > 1:
     run_command(result_commands)
   else:
     show_help_message()
